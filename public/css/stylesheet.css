@@ -1,0 +1,53 @@
+.container {
+    width: 850px;
+}
+
+#title {
+    width: 500px;
+}
+
+#timer {
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: 15px;
+    float: right;
+}
+
+#add-user-wrapper {
+    position: relative;
+    padding: 10px;
+}
+
+.add-user-form input {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.btn {
+    border: 0px solid transparent; /* this was 1px earlier */
+}
+
+.row {
+    padding: 3px 0;
+}
+
+#sample-text > p {
+
+    font-family: 'monospace', 'monaco', 'consolas', 'courier';
+    margin: 0;
+    min-height: 1em;
+
+}
+
+.tab {
+    padding-left: 4em
+}
+
+#input-text {
+    height: 250px;
+}
+
+.valid-p {
+    background: #12ff85;
+}

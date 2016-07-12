@@ -1,0 +1,73 @@
+<html>
+<head>
+    <title>{{ title }}</title>
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <script src="js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
+
+    <!-- served by node server -->
+    <script type="text/javascript">
+        var url = "http://{{ node_url }}";
+    </script>
+    <!-- <script type="text/javascript" src="socket.io/socket.io.js"></script> -->
+    <script type="text/javascript" src="js/testing.js"></script>
+</head>
+<body onload="start()">
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 id="timer"></h1> <!-- floating right -->
+            <h1 id="title">{{ title }}</h1>
+            <h3>Errors: <span id="errors">0</span></h3>
+        </div>
+    </div>
+
+    <div class="row" id="ready-block">
+        <div class="col-md-12">
+            <button id="ready-button" class="btn btn-success">
+                <span class="glyphicon glyphicon-play"></span> Ready
+            </button>
+        </div>
+    </div>
+
+    <div class="row" id="game-block" style="display: none">
+
+        <div class="col-md-12">
+            <div id="sample-text"></div>
+        </div>
+
+        <div class="col-md-12">
+            <div style="padding-top:10px;">
+                <div id="input-text" class="form-control" contenteditable="true"></div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Invisible textarea -->
+<textarea id="code_template" style="display: none">var fs = require('fs');
+var path = require('path');
+
+var filePath = path.join(__dirname, 'start.html');
+
+fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
+    if (!err) {
+        console.log('received data: ' + data);
+        response.writeHead(200, {'Content-Type': 'text/html'});
+        response.write(data);
+        response.end();
+    } else {
+        console.log(err);
+    }
+});</textarea>
+
+</body>
+</html>
