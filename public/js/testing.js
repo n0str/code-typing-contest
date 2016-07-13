@@ -24,7 +24,7 @@ var cGame = (function(cGame){
     cGame.bindEvents = function() {
 
         cGame.readyButton.addEventListener('click', cGame.showGame);
-        cGame.inputTextBlock.addEventListener('keyup', cGame.codeOnKeyUp);
+        cGame.inputTextBlock.addEventListener('keydown', cGame.codeOnKeyDown);
         cGame.inputTextBlock.addEventListener('paste', function (event) { event.preventDefault(); return false; });
 
     };
@@ -69,7 +69,7 @@ var cGame = (function(cGame){
 
     };
 
-    cGame.codeOnKeyUp = function (event) {
+    cGame.codeOnKeyDown = function (event) {
 
         var inputText = cGame.inputTextBlock.innerText.replace(new RegExp(String.fromCharCode(160), "g"), " "),
             equalContentLength = 0;
@@ -81,7 +81,12 @@ var cGame = (function(cGame){
                 equalContentLength += 1;
             }
             else {
-                console.log(inputText[i], cGame.sampleText[i], event.key);
+                // console.log(inputText[i], cGame.sampleText[i], event.key);
+
+                if (event.keyCode == 16) {
+                    console.log("!!!!!!!!");
+                }
+
                 if (event.key != "Backspace" && event.key != "Enter")
                 {
                     cGame.errorCount += 1;
@@ -91,6 +96,8 @@ var cGame = (function(cGame){
                 break;
             }
         }
+
+        console.log(equalContentLength);
 
         cGame.highlightSample(equalContentLength);
 

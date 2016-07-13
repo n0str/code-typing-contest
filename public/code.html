@@ -5,6 +5,8 @@
     <!-- bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/styles/idea.css">
+
     <script src="js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="css/stylesheet.css">
@@ -21,7 +23,7 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <h1 id="timer"></h1> <!-- floating right -->
             <h1 id="title">{{ title }}</h1>
             <h3>Errors: <span id="errors">0</span></h3>
@@ -29,7 +31,7 @@
     </div>
 
     <div class="row" id="ready-block">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <button id="ready-button" class="btn btn-success">
                 <span class="glyphicon glyphicon-play"></span> Ready
             </button>
@@ -44,7 +46,9 @@
 
         <div class="col-md-12">
             <div style="padding-top:10px;">
-                <div id="input-text" class="form-control" contenteditable="true"></div>
+                <pre>
+                    <code id="input-text" class="form-control" contenteditable="true"></code>
+                </pre>
             </div>
         </div>
 
@@ -53,21 +57,36 @@
 </div>
 
 <!-- Invisible textarea -->
-<textarea id="code_template" style="display: none">var fs = require('fs');
-var path = require('path');
+<textarea id="code_template" style="display: none">test <= 5 p
+static void sink(T *array, int start, int end)
+{
+    int root = start;
+    while (LEFT(root) <= end)
+    {
+        int child = LEFT(root);
+        int swap = root;
 
-var filePath = path.join(__dirname, 'start.html');
+        if (array[swap] < array[child])
+        {
+            swap = child;
+        }
+        // if it has a right child, and that right child is also bigger, swap with that one instead
+        if ((child + 1) <= end && array[swap] < array[child + 1])
+        {
+            swap = child + 1;
+        }
 
-fs.readFile(filePath, {encoding: 'utf-8'}, function(err,data){
-    if (!err) {
-        console.log('received data: ' + data);
-        response.writeHead(200, {'Content-Type': 'text/html'});
-        response.write(data);
-        response.end();
-    } else {
-        console.log(err);
+        if (swap != root)
+        {
+            xchg(array, root, swap);
+            root = swap;            // continue sink down the child we just swapped with
+        }
+        else
+        {
+            return;
+        }
     }
-});</textarea>
+}</textarea>
 
 </body>
 </html>
