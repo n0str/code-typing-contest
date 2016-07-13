@@ -4,6 +4,8 @@
 
 var cGame = (function(cGame){
 
+    cGame.TAB_KEYCODE = 9;
+
     cGame.init = function() {
 
         cGame.readyButton = document.getElementById("ready-button");
@@ -70,6 +72,24 @@ var cGame = (function(cGame){
     };
 
     cGame.codeOnKeyDown = function (event) {
+
+        if (event.keyCode == cGame.TAB_KEYCODE) {
+
+            var sel = window.getSelection();
+            if (sel) {
+                var range = sel.getRangeAt(0);
+                var newNode = document.createTextNode('    ');
+                range.insertNode(newNode);
+
+                range.setStartAfter(newNode);
+                range.setEndAfter(newNode);
+
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+
+            event.preventDefault();
+        }
 
         var inputText = cGame.inputTextBlock.innerText.replace(new RegExp(String.fromCharCode(160), "g"), " "),
             equalContentLength = 0;
