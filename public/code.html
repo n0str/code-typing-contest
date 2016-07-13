@@ -23,9 +23,9 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <h1 id="timer"></h1> <!-- floating right -->
-            <h1 id="title">{{ title }}</h1>
+            <h1 id="title">Check your coding skills ^_^ </h1>
             <h3>Errors: <span id="errors">0</span></h3>
         </div>
     </div>
@@ -41,7 +41,7 @@
     <div class="row" id="game-block" style="display: none">
 
         <div class="col-md-12">
-            <div id="sample-text"></div>
+            <pre><code id="sample-text"></code></pre>
         </div>
 
         <div class="col-md-12">
@@ -57,35 +57,16 @@
 </div>
 
 <!-- Invisible textarea -->
-<textarea id="code_template" style="display: none">test <= 5 p
-static void sink(T *array, int start, int end)
+<textarea id="code_template" style="display: none">string answerQuestion(string q)
 {
-    int root = start;
-    while (LEFT(root) <= end)
-    {
-        int child = LEFT(root);
-        int swap = root;
-
-        if (array[swap] < array[child])
-        {
-            swap = child;
-        }
-        // if it has a right child, and that right child is also bigger, swap with that one instead
-        if ((child + 1) <= end && array[swap] < array[child + 1])
-        {
-            swap = child + 1;
-        }
-
-        if (swap != root)
-        {
-            xchg(array, root, swap);
-            root = swap;            // continue sink down the child we just swapped with
-        }
-        else
-        {
-            return;
-        }
+    string a;
+    if(q == "Please?") {
+        a = "Okay!";
     }
+    else {
+        a = "You forgot the magic word!";
+    }
+    return a;
 }</textarea>
 
 </body>
