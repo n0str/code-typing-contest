@@ -1,10 +1,12 @@
 /**
- * Created by dsnos on 12.07.2016.
+ * Created by nostr on 12.07.2016.
  */
 
 var cGame = (function(cGame){
 
     cGame.TAB_KEYCODE = 9;
+    cGame.BACKSPACE_KEYCODE = 9;
+    cGame.DELETE_KEYCODE = 46;
 
     cGame.init = function() {
 
@@ -14,8 +16,10 @@ var cGame = (function(cGame){
         cGame.sampleTextBlock = document.getElementById("sample-text");
         cGame.inputTextBlock = document.getElementById("input-text");
         cGame.errorsBlock = document.getElementById("errors");
+        cGame.timerBlock = document.getElementById("timer");
 
         cGame.sampleLinesBlocks = [];
+        cGame.inputText = "";
 
         cGame.errorCount = 0;
 
@@ -27,6 +31,7 @@ var cGame = (function(cGame){
 
         cGame.readyButton.addEventListener('click', cGame.showGame);
         cGame.inputTextBlock.addEventListener('keydown', cGame.codeOnKeyDown);
+        cGame.inputTextBlock.addEventListener('input', cGame.codeOnInput);
         cGame.inputTextBlock.addEventListener('paste', function (event) { event.preventDefault(); return false; });
 
     };
@@ -73,6 +78,7 @@ var cGame = (function(cGame){
 
     cGame.codeOnKeyDown = function (event) {
 
+        /** Insert 4 spaces when tab is pressed and move caret after them. */
         if (event.keyCode == cGame.TAB_KEYCODE) {
 
             var sel = window.getSelection();
@@ -88,36 +94,32 @@ var cGame = (function(cGame){
                 sel.addRange(range);
             }
 
+            cGame.codeOnInput(event);
             event.preventDefault();
         }
 
+    };
+
+    cGame.codeOnInput = function () {
+
+        /** Get input text with all '&nbsp;' translated into simple spaces. */
         var inputText = cGame.inputTextBlock.innerText.replace(new RegExp(String.fromCharCode(160), "g"), " "),
             equalContentLength = 0;
 
         for (var i = 0; i < inputText.length; i++) {
-            if ((inputText[i] == cGame.sampleText[i]) ||
-            (inputText[i] == " " && cGame.sampleText[i] == "&nbsp;"))
-            {
-                equalContentLength += 1;
+
+            if (inputText[i] == cGame.sampleText[i]) {
+
+                equalContentLength += 1
+
             }
             else {
-                // console.log(inputText[i], cGame.sampleText[i], event.key);
-
-                if (event.keyCode == 16) {
-                    console.log("!!!!!!!!");
-                }
-
-                if (event.key != "Backspace" && event.key != "Enter")
-                {
-                    cGame.errorCount += 1;
-                    cGame.errorsBlock.innerHTML = cGame.errorCount;
-                }
 
                 break;
-            }
-        }
 
-        console.log(equalContentLength);
+            }
+
+        }
 
         cGame.highlightSample(equalContentLength);
 
@@ -126,6 +128,12 @@ var cGame = (function(cGame){
     cGame.highlightSample = function (validCharCount) {
 
         cGame.renderSampleText();
+
+        if (validCharCount == cGame.sampleText.length) {
+
+            cGame.gameFinished();
+
+        }
 
         for (var i = 0; i < cGame.sampleLines.length && validCharCount != 0; i++) {
 
@@ -160,6 +168,14 @@ var cGame = (function(cGame){
 
     };
 
+    cGame.gameFinished = function () {
+
+        cGame.timerBlock.innerHTML = "Success!";
+        console.log("Game finished!");
+        alert("Game finished!");
+
+    };
+
     return cGame;
 
 })({});
@@ -172,19 +188,20 @@ function start() {
 
     cGame.showGame();
 
-
 }
 
 function timer(count, callback) {
     var counter = setInterval(timer, 1000);
 
     function timer() {
-        $("#timer").html(count);
+        cGame.timerBlock.innerHTML = count;
+
         if (count <= 0) {
-            $("#timer").html("Begin!");
+            cGame.timerBlock.innerHTML = "Begin!";
             clearInterval(counter);
             callback();
         }
+
         count--;
     }
 }
